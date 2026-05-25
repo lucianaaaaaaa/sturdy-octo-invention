@@ -1,15 +1,16 @@
-// ESTRUCTURA DE UN USUARIO AUTENTICADO
+// Usuario autenticado
 export interface User {
-  id: number;
-  usuario: string;
-  rol: string;
-  ciudad?: string;
+  id: number
+  usuario: string
+  rol: 'Administrador' | 'Invitado' | 'Colaborador'
 }
+// Roles permitidos en el sistema
 
-// INTERFACE QUE DEFINE LA RESPUESTA DEL LOGIN
+// Respuesta del login JWT
 export interface LoginResponse {
-  success: boolean;
-  message: string;
-  user?: User;
+  success: boolean
+  token: string
+  user: User
 }
-// EL USUARIO PUEDE EXISTIR O NO
+// Estado del login y Token JWT firmado
+// Datos del usuario

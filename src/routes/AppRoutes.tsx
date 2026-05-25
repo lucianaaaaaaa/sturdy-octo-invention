@@ -1,74 +1,90 @@
-//Manejo de rutas
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+// Sistema rutas React
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+// Página login pública
+import LoginPage from '../pages/LoginPage'
+// Página administrado
+import AdminPage from '../pages/AdminPage'
+// Página invitado
+import GuestPage from '../pages/GuestPage'
+// Página colaborador
+import CollaboratorPage from '../pages/CollaboratorPage'
+// Pagina acceso denegado
+import UnauthorizedPage from '../pages/UnauthorizedPage'
+// Pag 404
+import NotFoundPage from '../pages/NotFoundPage'
+// Layout principal
+import MainLayout from '../layouts/MainLayout'
+// Proteccion JWT + Roles
+import ProtectedRoute from '../components/ProtectedRoute'
 
-//importacion de las paginas
-import Home from "../pages/Home";
-import About from "../pages/About";
-import Login from "../pages/Login";
-import Dashboard from "../pages/Dashboard";
-import Info from "../pages/Info";
-import Perfil from "../pages/Perfil";
-import Configuracion from "../pages/Configuracion";
-import NotFound from "../pages/NotFound";
-
-//importacion de los layouts
-import PublicLayout from "../layouts/PublicLayout";
-import PrivateLayout from "../layouts/PrivateLayout";
-
-//importa las rutas protegidas y no protegidas
-import PrivateRoute from "./PrivateRoute";
-import PublicRoute from "./PublicRoute";
-
-export default function AppRoutes() {
+const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* PUBLICAS */}
-        <Route element={<PublicLayout />} >
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/login" element={
-              <PublicRoute>
-                <Login />
-              </PublicRoute>
+
+        <Route
+          path='/'
+          element={<LoginPage />}
+        />
+
+        <Route
+          element={<MainLayout />}
+        >
+
+          {/* Proteccion rol admin */}
+          <Route
+            path='/admin'
+            element={
+              <ProtectedRoute
+                allowedRole='Administrador'
+              >
+                <AdminPage />
+              </ProtectedRoute>
             }
           />
+
+          {/* Proteccion rol colaborador */}
+          <Route
+            path='/colaborador'
+            element={
+              <ProtectedRoute
+                allowedRole='Colaborador'
+              >
+                <CollaboratorPage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Proteccion rol invitado */}
+          <Route
+            path='/guest'
+            element={
+              <ProtectedRoute
+                allowedRole='Invitado'
+              >
+                <GuestPage />
+              </ProtectedRoute>
+            }
+          />
+
         </Route>
 
-        {/* PRIVADAS */}
-        {/* PrivateRoute Protege todas las rutas internas */}
-        {/* PrivateLayout carga el layout privado */}
-        {/* Ruta padre y rutas hijas */}
         <Route
+          path='/unauthorized'
           element={
-            <PrivateRoute>
-              <PrivateLayout />
-            </PrivateRoute>
+            <UnauthorizedPage />
           }
-        >
-          <Route
-            path="/dashboard"
-            element={<Dashboard />}
-          />
-          <Route
-            path="/info"
-            element={<Info />}
-          />
-            <Route
-              path="/perfil"
-              element={<Perfil />}
-            />
-            <Route
-              path="/configuracion"
-              element={<Configuracion />}
-            />
-        </Route>
-        {/* 404 */}
-        <Route
-          path="*"
-          element={<NotFound />}
         />
+
+        <Route
+          path='*'
+          element={<NotFoundPage />}
+        />
+
       </Routes>
+
     </BrowserRouter>
-  );
+  )
 }
+
+export default AppRoutes
