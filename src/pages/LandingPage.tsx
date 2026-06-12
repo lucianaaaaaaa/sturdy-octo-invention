@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import useSeo from '../hooks/useSeo'
 
 const LandingPage = () => {
@@ -16,9 +17,9 @@ const LandingPage = () => {
           </p>
 
           <div className="landing-actions">
-            <a className="primary-action" href="/login">
+            <Link className="primary-action" to="/login">
               Ingresar
-            </a>
+            </Link>
           </div>
         </div>
       </section>
