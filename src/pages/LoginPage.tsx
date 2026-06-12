@@ -72,12 +72,6 @@ const LoginPage = () => {
   return (
     <section className="login-grid">
       <div className="login-copy">
-        <p className="eyebrow">Frontend moderno con React + TypeScript</p>
-        <h1>Rick & Morty Explorer</h1>
-        <p>
-          Accede con JWT simulado, navega por roles y consume la API pública de personajes.
-        </p>
-
         <div className="hint-card">
           <h2>Credenciales de prueba</h2>
           <ul>

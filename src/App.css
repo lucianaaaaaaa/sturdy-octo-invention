@@ -1,14 +1,14 @@
 :root {
-	--bg: #f5f0e8;
-	--bg-soft: #ece3d3;
-	--surface: #fffaf2;
-	--surface-strong: #f7efe1;
-	--ink: #16212a;
-	--muted: #51606c;
-	--line: rgba(22, 33, 42, 0.14);
-	--accent: #d97706;
-	--accent-2: #0f766e;
-	--shadow: 0 18px 40px rgba(22, 33, 42, 0.12);
+	--bg: #ebe6db;
+	--bg-soft: #e1dac9;
+	--surface: #f7f2e8;
+	--surface-strong: #efe8d8;
+	--ink: #2a343d;
+	--muted: #5f6a71;
+	--line: rgba(42, 52, 61, 0.12);
+	--accent: #5ea77c;
+	--accent-2: #b9b04e;
+	--shadow: 0 10px 24px rgba(42, 52, 61, 0.08);
 }
 
 .app-shell {
@@ -36,9 +36,8 @@
 	align-items: center;
 	gap: 16px;
 	padding: 16px 24px;
-	background: rgba(255, 250, 242, 0.92);
+	background: rgba(247, 242, 232, 0.95);
 	border-bottom: 1px solid var(--line);
-	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset;
 }
 
 .brand {
@@ -64,12 +63,12 @@
 .empty-state button,
 .button-link,
 .primary-action {
-	background: var(--ink);
-	color: #fff7eb;
+	background: #5ea77c;
+	color: #f7f2e8;
 	font-weight: 700;
 	padding: 12px 18px;
 	box-shadow: var(--shadow);
-	border: 1px solid rgba(22, 33, 42, 0.04);
+	border: 1px solid rgba(42, 52, 61, 0.04);
 }
 
 .role-pill,
@@ -142,7 +141,7 @@
 
 .eyebrow {
 	margin: 0 0 12px;
-	color: var(--accent);
+	color: var(--accent-2);
 	letter-spacing: 0.14em;
 	text-transform: uppercase;
 	font-size: 0.75rem;
@@ -153,7 +152,7 @@
 	margin-top: 24px;
 	border-radius: 18px;
 	padding: 18px;
-	background: rgba(255, 255, 255, 0.5);
+	background: rgba(255, 255, 255, 0.28);
 }
 
 .login-card {
@@ -182,11 +181,11 @@
 .crud-form textarea {
 	width: 100%;
 	padding: 14px 16px;
-	background: #fffdf8;
+	background: #fcfaf4;
 	color: var(--ink);
-	border: 1px solid rgba(22, 33, 42, 0.14);
+	border: 1px solid rgba(42, 52, 61, 0.12);
 	border-radius: 14px;
-	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+	box-shadow: none;
 }
 
 .login-card button,
@@ -273,14 +272,14 @@
 }
 
 .character-card {
-	background: #fffdf8;
+	background: #f8f4ea;
 	transform: translateY(0);
 	transition: transform 140ms ease, box-shadow 140ms ease;
 }
 
 .character-card:hover {
 	transform: translateY(-2px);
-	box-shadow: 0 24px 48px rgba(22, 33, 42, 0.14);
+	box-shadow: 0 14px 30px rgba(42, 52, 61, 0.1);
 }
 
 .character-card img {
@@ -326,17 +325,17 @@
 }
 
 .status-alive {
-	background: rgba(15, 118, 110, 0.12);
+	background: rgba(94, 167, 124, 0.16);
 	color: var(--accent-2);
 }
 
 .status-dead {
-	background: rgba(185, 28, 28, 0.12);
-	color: #b91c1c;
+	background: rgba(201, 109, 92, 0.14);
+	color: #a85b4b;
 }
 
 .status-unknown {
-	background: rgba(81, 96, 108, 0.12);
+	background: rgba(122, 116, 86, 0.14);
 	color: var(--muted);
 }
 
@@ -367,7 +366,7 @@
 	content: '';
 	position: absolute;
 	inset: 0;
-	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.42), transparent);
+	background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
 	transform: translateX(-100%);
 	animation: shimmer 1.4s infinite;
 }
@@ -436,8 +435,8 @@
 }
 
 .danger-button {
-	border-color: rgba(185, 28, 28, 0.28);
-	color: #b91c1c !important;
+	border-color: rgba(201, 109, 92, 0.24);
+	color: #a85b4b !important;
 }
 
 .success {

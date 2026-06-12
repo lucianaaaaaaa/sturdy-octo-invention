@@ -10,10 +10,9 @@ const LandingPage = () => {
     <main className="landing-shell">
       <section className="landing-hero">
         <div>
-          <p className="eyebrow">React · TypeScript · JWT · APIs REST</p>
-          <h1>Explora el multiverso con una experiencia frontend moderna.</h1>
+          <h1>Luciana Leaño - Catálogo de personajes de serie "Rick and Morty"</h1>
           <p>
-            Esta aplicación demuestra autenticación simulada con Context API y Protected Routes, navegación por roles y consumo de la API pública de Rick and Morty.
+            Una interfaz sencilla para entrar, explorar personajes y manejar registros según el rol.
           </p>
 
           <div className="landing-actions">
@@ -22,16 +21,6 @@ const LandingPage = () => {
             </a>
           </div>
         </div>
-
-        <aside className="landing-card">
-          <h2>Qué incluye</h2>
-          <ul>
-            <li>Landing page temática</li>
-            <li>Login con usuarios predefinidos</li>
-            <li>CRUD local con validaciones</li>
-            <li>Catálogo de personajes con búsqueda y filtros</li>
-          </ul>
-        </aside>
       </section>
     </main>
   )
