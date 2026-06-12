@@ -1,12 +1,12 @@
 // Sistema rutas React
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom'
 // Página login pública
 import LoginPage from '../pages/LoginPage'
+// Página landing
+import LandingPage from '../pages/LandingPage'
 // Página administrado
 import AdminPage from '../pages/AdminPage'
-// Página invitado
-import GuestPage from '../pages/GuestPage'
-// Página colaborador
+// Página usuario
 import CollaboratorPage from '../pages/CollaboratorPage'
 // Pagina acceso denegado
 import UnauthorizedPage from '../pages/UnauthorizedPage'
@@ -16,6 +16,27 @@ import NotFoundPage from '../pages/NotFoundPage'
 import MainLayout from '../layouts/MainLayout'
 // Proteccion JWT + Roles
 import ProtectedRoute from '../components/ProtectedRoute'
+// Contexto autenticación
+import { useAuth } from '../context/AuthContext'
+
+const roleHome = {
+  Administrador: '/admin',
+  Usuario: '/user'
+} as const
+
+const LandingRoute = () => {
+  const { user, loading } = useAuth()
+
+  if (loading) {
+    return <div className="loading-screen">Preparando sesión...</div>
+  }
+
+  if (user) {
+    return <Navigate to={roleHome[user.rol]} replace />
+  }
+
+  return <LandingPage />
+}
 
 const AppRoutes = () => {
   return (
@@ -24,6 +45,11 @@ const AppRoutes = () => {
 
         <Route
           path='/'
+          element={<LandingRoute />}
+        />
+
+        <Route
+          path='/login'
           element={<LoginPage />}
         />
 
@@ -43,28 +69,27 @@ const AppRoutes = () => {
             }
           />
 
-          {/* Proteccion rol colaborador */}
+          {/* Proteccion rol usuario */}
           <Route
-            path='/colaborador'
+            path='/user'
             element={
               <ProtectedRoute
-                allowedRole='Colaborador'
+                allowedRole='Usuario'
               >
                 <CollaboratorPage />
               </ProtectedRoute>
             }
           />
 
-          {/* Proteccion rol invitado */}
+          {/* Alias para compatibilidad con rutas previas */}
+          <Route
+            path='/colaborador'
+            element={<Navigate to='/user' replace />}
+          />
+
           <Route
             path='/guest'
-            element={
-              <ProtectedRoute
-                allowedRole='Invitado'
-              >
-                <GuestPage />
-              </ProtectedRoute>
-            }
+            element={<Navigate to='/user' replace />}
           />
 
         </Route>

@@ -1,10 +1,11 @@
+/* eslint-disable react-refresh/only-export-components */
 //centraliza toda la autenticación JWT del sistema.
 //para compartir el usuario autenticado y las funciones login/logout en toda la app
 // Hooks y tipos de React
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import type { ReactNode } from 'react'
 // Funciones API JWT
-import { loginRequest, verifyRequest, logoutRequest } from '../api/authApi'
+import { loginRequest, logoutRequest, readStoredUser } from '../api/authApi'
 // Tipo User
 import type { User } from '../types/auth'
 
@@ -22,35 +23,9 @@ const AuthContext = createContext({} as AuthContextProps)
 // Provider principal JWT
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
    // Estado usuario
-  const [user, setUser] = useState<User | null>(null)
-   // Estado loading
-  const [loading, setLoading] = useState(true)
-  // Verifica sesión al iniciar app
-  useEffect(() => { verificarSesion() }, [])
-
-   // Validar token JWT
-  const verificarSesion = async () => {
-    // Obtener token
-    const token = localStorage.getItem('token')
-    // Si no existe token
-    if (!token) {
-      setLoading(false)
-      return
-    }
-
-    try {
-      // Verificar JWT backend
-      const response = await verifyRequest()
-      // Guardar usuario valido
-      setUser(response.user)
-    } catch (error) {
-      // Token inválido
-      localStorage.removeItem('token')
-      setUser(null)
-    }
-    // Finaliza loading
-    setLoading(false)
-  }
+  const [user, setUser] = useState<User | null>(() => readStoredUser())
+  // Estado loading
+  const loading = false
 
   // Login usuario
   const login = async (usuario: string,password: string) => {
@@ -63,18 +38,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(response.user)
       // Login correcto
       return true
-    } catch (error) {
+    } catch {
       // Login incorrecto
+      localStorage.removeItem('token')
+      setUser(null)
       return false
     }
   }
 
   // Logout sistema
   const logout = async () => {
-    try {
-      // Consumir logout API
-      await logoutRequest()
-    } catch (error) {}
+    // Consumir logout API
+    await logoutRequest().catch(() => undefined)
     // Eliminar token JWT
     localStorage.removeItem('token')
     // Limpiar usuario

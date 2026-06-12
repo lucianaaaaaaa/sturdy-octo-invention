@@ -1,9 +1,17 @@
 // Página 404 Not Found
+import useSeo from '../hooks/useSeo'
+
 const NotFoundPage = () => {
+  useSeo({
+    title: 'Rick & Morty Frontend | 404',
+    description: 'La ruta solicitada no existe.'
+  })
+
   return (
-    <div className="panelcontenido">
+    <section className="empty-state unauthorized-state">
       <h1>404</h1>
-    </div>
+      <p>La ruta solicitada no existe.</p>
+    </section>
   )
 }
 

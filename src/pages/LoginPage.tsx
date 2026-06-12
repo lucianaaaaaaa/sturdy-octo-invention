@@ -1,12 +1,21 @@
 // Hooks React
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 // Navegación rutas
 import { useNavigate } from 'react-router-dom'
 // Context autenticación JWT
 import { useAuth } from '../context/AuthContext'
+// Credenciales demo
+import { demoUsers } from '../api/authApi'
+// SEO
+import useSeo from '../hooks/useSeo'
 
 const LoginPage = () => {
+  useSeo({
+    title: 'Rick & Morty Frontend | Login',
+    description: 'Acceso con usuarios predefinidos, autenticación simulada y rutas protegidas.'
+  })
+
   // Estado usuario input
   const [usuario, setUsuario] = useState('')
   // Estado password input
@@ -14,9 +23,17 @@ const LoginPage = () => {
   // Estado mensaje error
   const [error, setError] = useState('')
   // Función login global
-  const { login } = useAuth()
+  const { login, user } = useAuth()
   // Navegación paginas
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!user) {
+      return
+    }
+
+    navigate(user.rol === 'Administrador' ? '/admin' : '/user', { replace: true })
+  }, [navigate, user])
   // Enviar formulario login
   const handleSubmit = async ( e: FormEvent ) => {
     e.preventDefault()
@@ -31,40 +48,47 @@ const LoginPage = () => {
       return
     }
 
-    // Obtener JWT guardado
-    const token = localStorage.getItem('token')
+    const account = demoUsers.find((item) => item.usuario === usuario)
 
-    // Seguridad básica
-    if (!token) 
+    if (!account) {
       return
-    
-    // Decodificar payload JWT
-    const payload = JSON.parse(atob(token.split('.')[1]))
+    }
 
     // Obtener rol usuario
-    const rol = payload.user.rol
+    const rol = account.rol
 
     if (rol === 'Administrador')
     {
       // Redir administrador
       navigate('/admin')
     }
-    else if (rol === 'Colaborador')
+    else if (rol === 'Usuario')
     {
-      // Redir colaborador
-      navigate('/colaborador')
-    }
-    else
-    {
-      // Redir guest
-      navigate('/guest')
+      // Redir usuario
+      navigate('/user')
     }
   }
 
   return (
-    <div className="cajalogin" >
-      <h1>Login con JWT</h1>
-      <form onSubmit={handleSubmit}>
+    <section className="login-grid">
+      <div className="login-copy">
+        <p className="eyebrow">Frontend moderno con React + TypeScript</p>
+        <h1>Rick & Morty Explorer</h1>
+        <p>
+          Accede con JWT simulado, navega por roles y consume la API pública de personajes.
+        </p>
+
+        <div className="hint-card">
+          <h2>Credenciales de prueba</h2>
+          <ul>
+            <li><strong>admin / admin123</strong></li>
+            <li><strong>user / user123</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <form className="login-card" onSubmit={handleSubmit}>
+        <h2>Ingresar</h2>
 
         {/* Input usuario */}        
         <input
@@ -72,9 +96,8 @@ const LoginPage = () => {
           placeholder='Usuario'
           value={usuario}
           onChange={(e) => setUsuario(e.target.value) }
+          autoComplete='username'
         />
-
-        <br /><br />
 
         {/* Input password */}
         <input
@@ -82,9 +105,8 @@ const LoginPage = () => {
           placeholder='Password'
           value={password}
           onChange={(e) => setPassword(e.target.value) }
+          autoComplete='current-password'
         />
-
-        <br /><br />
 
         {/* Botón login */}
         <button type='submit'>
@@ -96,12 +118,12 @@ const LoginPage = () => {
       {/* Mensaje error */}
       {
         error && (
-          <p className="error">
+          <p className="error" role='alert'>
             {error}
           </p>
         )
       }
-    </div>
+    </section>
   )
 }
 

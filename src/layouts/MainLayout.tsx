@@ -5,12 +5,14 @@ import Navbar from '../components/Navbar'
 
 const MainLayout = () => {
   return (
-    <>
+    <div className="app-shell">
       {/* Barra navegación */}
       <Navbar />
-      <Outlet />
+      <main className="app-main">
+        <Outlet />
+      </main>
       {/* Contenido dinámico */}
-    </>
+    </div>
   )
 }
 

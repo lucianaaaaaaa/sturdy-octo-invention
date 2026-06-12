@@ -10,7 +10,7 @@ import { useAuth } from '../context/AuthContext'
 // Props del componente
 interface Props {
   children: ReactNode
-  allowedRole: 'Administrador' | 'Invitado' | 'Colaborador'
+  allowedRole: 'Administrador' | 'Usuario'
 }
 
 // Componente protección rutas

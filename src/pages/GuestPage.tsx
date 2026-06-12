@@ -1,10 +1,13 @@
 // Página privada invitados
+import CharacterCatalog from '../components/CharacterCatalog'
+
 const GuestPage = () => {
   return (
-    <div className="panelcontenido">
-      <h1>Panel Invitado</h1>
-      <p>Solo invitados.</p>
-    </div>
+    <CharacterCatalog
+      accentLabel='Vista pública'
+      title='Explorador de personajes de Rick and Morty'
+      description='Consulta personajes populares, filtra por estado y navega por páginas con una interfaz moderna y accesible.'
+    />
   )
 }
 

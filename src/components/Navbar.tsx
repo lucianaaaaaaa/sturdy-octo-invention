@@ -11,6 +11,11 @@ const Navbar = () => {
   // Hook navegación
   const navigate = useNavigate()
 
+  const homeByRole = {
+    Administrador: '/admin',
+    Usuario: '/user'
+  }[user?.rol ?? 'Usuario']
+
   // Cerrar sesion - Logout JWT
   const handleLogout = async () => {
     await logout()
@@ -18,16 +23,22 @@ const Navbar = () => {
   }
 
   return (
-    <div className="barra" >
-      <div>
-        Usuario: {user?.usuario}
-      </div>
-      <div>
-        Rol: {user?.rol}
-      </div>
-      <button onClick={handleLogout}>
-        Cerrar sesión
+    <div className="barra">
+      <button className="brand" onClick={() => navigate(homeByRole)} type="button">
+        Rick & Morty Frontend
       </button>
+
+      <div className="user-meta">
+        <span>
+          Usuario: <strong>{user?.usuario}</strong>
+        </span>
+        <span className="role-pill">
+          {user?.rol}
+        </span>
+        <button onClick={handleLogout} type="button">
+          Cerrar sesión
+        </button>
+      </div>
     </div>
   )
 }
